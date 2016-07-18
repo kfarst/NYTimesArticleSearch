@@ -1,6 +1,7 @@
 package com.example.kfarst.nytimesarticlesearch;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Movie;
 import android.support.v4.text.TextUtilsCompat;
@@ -9,9 +10,11 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kfarst.nytimesarticlesearch.activities.ArticleActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,6 +24,7 @@ import java.util.List;
  */
 public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapter.ViewHolder> {
     private List<Article> mArticles;
+    private AdapterView.OnItemClickListener listener;
 
     // Pass in the contact array into the constructor
     public ArticleArrayAdapter(List<Article> listItems) {
@@ -34,6 +38,11 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         // for any view that will be set as you render a row
         public ImageView ivImage;
         public TextView tvTitle;
+        private String webUrl;
+
+        public void setWebUrl(String webUrl) {
+            this.webUrl = webUrl;
+        }
 
         // We also create a constructor that accepts the entire item row
         // and does the view lookups to find each subview
@@ -44,6 +53,18 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
 
             ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
             tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+        }
+
+        public void bind (final Article article, final AdapterView.OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Context context = view.getContext();
+                    Intent i = new Intent(context, ArticleActivity.class);
+                    i.putExtra("url", article.webUrl);
+                    context.startActivity(i);
+                }
+            });
         }
     }
 
@@ -72,6 +93,8 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
                     .load(article.getThumbnail())
                     .into(holder.ivImage);
         }
+
+        holder.bind(mArticles.get(position), listener);
     }
 
     @Override

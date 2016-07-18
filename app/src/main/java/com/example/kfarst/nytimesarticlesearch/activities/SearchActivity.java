@@ -1,11 +1,14 @@
-package com.example.kfarst.nytimesarticlesearch;
+package com.example.kfarst.nytimesarticlesearch.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,7 +16,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ListAdapter;
+import android.widget.Toast;
 
+import com.example.kfarst.nytimesarticlesearch.Article;
+import com.example.kfarst.nytimesarticlesearch.ArticleArrayAdapter;
+import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -32,7 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
     RecyclerView gvResults;
-    StaggeredGridLayoutManager gaggeredGridLayoutManager;
+    StaggeredGridLayoutManager stagaggeredGridLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +58,30 @@ public class SearchActivity extends AppCompatActivity {
         gvResults = (RecyclerView) findViewById(R.id.gvResults);
         gvResults.setHasFixedSize(true);
 
-        gaggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
+        stagaggeredGridLayoutManager = new StaggeredGridLayoutManager(4, 1);
 
-        gvResults.setLayoutManager(gaggeredGridLayoutManager);
+        gvResults.setLayoutManager(stagaggeredGridLayoutManager);
 
         adapter = new ArticleArrayAdapter(articles);
 
         gvResults.setAdapter(adapter);
+
+        //gvResults.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+        //    @Override
+        //    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+        //        return true;
+        //    }
+
+        //    @Override
+        //    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        //        Log.d("error", "foo");
+        //    }
+
+        //    @Override
+        //    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+         //  }
+       //});
     }
 
     @Override
@@ -82,8 +106,15 @@ public class SearchActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onArticleSearch(View view) {
+    public void onArticleSearch(final View view) {
         String query = etQuery.getText().toString();
+
+        if (articles.size() > 0) {
+            articles.clear();
+            adapter.notifyDataSetChanged();
+        }
+
+        Toast.makeText(view.getContext(), R.string.searching, Toast.LENGTH_SHORT).show();
 
         AsyncHttpClient client = new AsyncHttpClient();
         String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
@@ -101,14 +132,17 @@ public class SearchActivity extends AppCompatActivity {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     articles.addAll(Article.fromJson(articleJsonResults));
                     adapter.notifyDataSetChanged();
+
+                    Toast.makeText(view.getContext(), R.string.done, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
+                    Toast.makeText(view.getContext(), R.string.search_failed, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Toast.makeText(view.getContext(), R.string.search_failed, Toast.LENGTH_SHORT).show();
             }
         });
     }
