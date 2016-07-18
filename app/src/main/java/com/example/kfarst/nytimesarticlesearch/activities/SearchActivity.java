@@ -1,21 +1,15 @@
 package com.example.kfarst.nytimesarticlesearch.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.GridView;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.example.kfarst.nytimesarticlesearch.Article;
@@ -65,23 +59,6 @@ public class SearchActivity extends AppCompatActivity {
         adapter = new ArticleArrayAdapter(articles);
 
         gvResults.setAdapter(adapter);
-
-        //gvResults.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-        //    @Override
-        //    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-        //        return true;
-        //    }
-
-        //    @Override
-        //    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-        //        Log.d("error", "foo");
-        //    }
-
-        //    @Override
-        //    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-         //  }
-       //});
     }
 
     @Override
