@@ -61,7 +61,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent i = new Intent(context, ArticleActivity.class);
-                    i.putExtra("url", article.webUrl);
+                    i.putExtra("article", article);
                     context.startActivity(i);
                 }
             });

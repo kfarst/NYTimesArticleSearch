@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.example.kfarst.nytimesarticlesearch.Article;
 import com.example.kfarst.nytimesarticlesearch.R;
 
 public class ArticleActivity extends AppCompatActivity {
@@ -17,7 +18,7 @@ public class ArticleActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        String url = getIntent().getStringExtra("url");
+        Article article = (Article) getIntent().getSerializableExtra("article");
 
         WebView webView = (WebView) findViewById(R.id.wvArticle);
 
@@ -29,7 +30,7 @@ public class ArticleActivity extends AppCompatActivity {
             }
         });
 
-        webView.loadUrl(url);
+        webView.loadUrl(article.getWebUrl());
     }
 
 }
