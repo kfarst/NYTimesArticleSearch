@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_settings"
+        android:id="@+id/btnSettings"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:tint="@android:color/white"
+        android:background="@android:color/transparent"
+        android:layout_alignParentStart="true"
+        android:onClick="onArticleSearch" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/etQuery"
+        android:layout_toRightOf="@+id/btnSettings"
+        android:layout_toLeftOf="@+id/btnQuery"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/btnSettings"
+        android:layout_toStartOf="@+id/btnQuery"
+        android:text="@string/hint" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:src="@drawable/ic_search"
+        android:id="@+id/btnQuery"
+        android:tint="@android:color/white"
+        android:background="@android:color/transparent"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="onArticleSearch" />
+
+</RelativeLayout>
