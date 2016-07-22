@@ -7,15 +7,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.example.kfarst.nytimesarticlesearch.Article;
 import com.example.kfarst.nytimesarticlesearch.ArticleArrayAdapter;
+import com.example.kfarst.nytimesarticlesearch.EndlessRecyclerViewScrollListener;
+import com.example.kfarst.nytimesarticlesearch.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -63,14 +62,21 @@ public class SearchActivity extends AppCompatActivity {
 
         gvResults.setLayoutManager(stagaggeredGridLayoutManager);
 
+        gvResults.addOnScrollListener(new EndlessRecyclerViewScrollListener(stagaggeredGridLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+                loadMoreArticles(page);
+            }
+        });
+
         adapter = new ArticleArrayAdapter(articles);
 
         gvResults.setAdapter(adapter);
     }
 
     public void onArticleSearch(final View view) {
-        String query = etQuery.getText().toString();
-
         if (articles.size() > 0) {
             articles.clear();
             adapter.notifyDataSetChanged();
@@ -78,14 +84,19 @@ public class SearchActivity extends AppCompatActivity {
 
         Toast.makeText(view.getContext(), R.string.searching, Toast.LENGTH_SHORT).show();
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        String url = "https://api.nytimes.com/svc/search/v2/articlesearch.json";
+        loadMoreArticles(0);
+
+        Toast.makeText(SearchActivity.this, R.string.done, Toast.LENGTH_SHORT).show();
+    }
+
+    private void loadMoreArticles (int page) {
+        String query = etQuery.getText().toString();
+
         RequestParams params = new RequestParams();
-        params.put("api-key", "0f924b4c4ba444ff827a50c0d96995d9");
-        params.put("page", 0);
+        params.put("page", page);
         params.put("q", query);
 
-        client.get(url, params, new JsonHttpResponseHandler() {
+        NYTimesApiClient.getArticles(params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray articleJsonResults = null;
@@ -94,17 +105,15 @@ public class SearchActivity extends AppCompatActivity {
                     articleJsonResults = response.getJSONObject("response").getJSONArray("docs");
                     articles.addAll(Article.fromJson(articleJsonResults));
                     adapter.notifyDataSetChanged();
-
-                    Toast.makeText(view.getContext(), R.string.done, Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
-                    Toast.makeText(view.getContext(), R.string.search_failed, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchActivity.this, R.string.search_failed, Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Toast.makeText(view.getContext(), R.string.search_failed, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SearchActivity.this, R.string.search_failed, Toast.LENGTH_SHORT).show();
             }
         });
     }
