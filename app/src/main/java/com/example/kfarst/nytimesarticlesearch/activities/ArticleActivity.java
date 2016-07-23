@@ -6,7 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.example.kfarst.nytimesarticlesearch.Article;
+import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.example.kfarst.nytimesarticlesearch.R;
 
 public class ArticleActivity extends AppCompatActivity {

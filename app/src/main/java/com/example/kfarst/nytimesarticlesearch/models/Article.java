@@ -1,4 +1,4 @@
-package com.example.kfarst.nytimesarticlesearch;
+package com.example.kfarst.nytimesarticlesearch.models;
 
 import org.json.JSONArray;
 import org.json.JSONException;

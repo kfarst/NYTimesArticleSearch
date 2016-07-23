@@ -1,10 +1,7 @@
-package com.example.kfarst.nytimesarticlesearch;
+package com.example.kfarst.nytimesarticlesearch.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Movie;
-import android.support.v4.text.TextUtilsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,7 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.activities.ArticleActivity;
+import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;

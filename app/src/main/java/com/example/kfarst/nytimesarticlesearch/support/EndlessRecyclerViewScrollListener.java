@@ -1,4 +1,4 @@
-package com.example.kfarst.nytimesarticlesearch;
+package com.example.kfarst.nytimesarticlesearch.support;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;

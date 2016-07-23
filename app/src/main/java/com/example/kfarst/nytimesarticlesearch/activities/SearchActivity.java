@@ -1,6 +1,7 @@
 package com.example.kfarst.nytimesarticlesearch.activities;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -11,12 +12,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.kfarst.nytimesarticlesearch.Article;
-import com.example.kfarst.nytimesarticlesearch.ArticleArrayAdapter;
-import com.example.kfarst.nytimesarticlesearch.EndlessRecyclerViewScrollListener;
-import com.example.kfarst.nytimesarticlesearch.NYTimesApiClient;
+import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterPagerFragment;
+import com.example.kfarst.nytimesarticlesearch.models.Article;
+import com.example.kfarst.nytimesarticlesearch.adapters.ArticleArrayAdapter;
+import com.example.kfarst.nytimesarticlesearch.support.EndlessRecyclerViewScrollListener;
+import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.R;
-import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -87,6 +88,14 @@ public class SearchActivity extends AppCompatActivity {
         loadMoreArticles(0);
 
         Toast.makeText(SearchActivity.this, R.string.done, Toast.LENGTH_SHORT).show();
+    }
+
+    public void renderSearchFilterFragment(View view) {
+        FragmentManager fm = getSupportFragmentManager();
+        SearchFilterPagerFragment alertDialog = SearchFilterPagerFragment.newInstance(0);
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+        alertDialog.show(fm, "fragment_pager_view");
+
     }
 
     private void loadMoreArticles (int page) {

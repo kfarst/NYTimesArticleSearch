@@ -1,4 +1,4 @@
-package com.example.kfarst.nytimesarticlesearch;
+package com.example.kfarst.nytimesarticlesearch.api;
 
 /**
  * Created by kfarst on 7/21/16.
