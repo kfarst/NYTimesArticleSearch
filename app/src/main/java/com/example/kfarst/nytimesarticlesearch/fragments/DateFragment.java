@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import com.appeaser.sublimepickerlibrary.SublimePicker;
 import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate;
 import com.appeaser.sublimepickerlibrary.helpers.SublimeListenerAdapter;
+import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions;
 import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker;
 import com.example.kfarst.nytimesarticlesearch.R;
 
@@ -52,7 +53,9 @@ public class DateFragment extends Fragment {
 
         mSublimePicker = (SublimePicker) view.findViewById(R.id.sublime_picker);
         // Passing `null` to apply default options
-        mSublimePicker.initializePicker(null, mListener);
+        SublimeOptions options = new SublimeOptions();
+        options.setDisplayOptions(SublimeOptions.ACTIVATE_DATE_PICKER);
+        mSublimePicker.initializePicker(options, mListener);
 
         // Inflate the layout for this fragment
         return view;
