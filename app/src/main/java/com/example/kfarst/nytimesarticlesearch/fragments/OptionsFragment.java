@@ -59,17 +59,25 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
 
         ButterKnife.bind(this, view);
 
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.order_array, android.R.layout.simple_spinner_item);
+
+        // Specify the layout to use when the list of choices appears
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        // Apply the adapter to the spinner
+        spOrder.setAdapter(spinnerAdapter);
+
         SearchFilterParams params = (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG));
 
-        gvCategories.hasFixedSize();
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
 
         gvCategories.setLayoutManager(gridLayoutManager);
 
-        CategoryArrayAdapter adapter = new CategoryArrayAdapter(params.addCategoriesFromArray(getResources().getStringArray(R.array.categories_array)));
+        CategoryArrayAdapter categoriesAdapter = new CategoryArrayAdapter(params.addCategoriesFromArray(getResources().getStringArray(R.array.categories_array)));
 
-        gvCategories.setAdapter(adapter);
+        gvCategories.setAdapter(categoriesAdapter);
 
         return view;
     }

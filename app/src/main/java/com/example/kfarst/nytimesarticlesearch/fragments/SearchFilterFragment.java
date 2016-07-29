@@ -1,11 +1,16 @@
 package com.example.kfarst.nytimesarticlesearch.fragments;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +25,7 @@ import org.parceler.Parcels;
  * Created by kfarst on 7/22/16.
  */
 public class SearchFilterFragment extends DialogFragment {
+    private static String PARAMS_ARG = "params";
 
     public SearchFilterFragment() {
         // Empty constructor is required for DialogFragment
@@ -30,9 +36,20 @@ public class SearchFilterFragment extends DialogFragment {
     public static SearchFilterFragment newInstance(SearchFilterParams params) {
         SearchFilterFragment frag = new SearchFilterFragment();
         Bundle args = new Bundle();
-        args.putParcelable("params", Parcels.wrap(params));
+        args.putParcelable(PARAMS_ARG, Parcels.wrap(params));
         frag.setArguments(args);
         return frag;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 
     @Override
@@ -43,7 +60,7 @@ public class SearchFilterFragment extends DialogFragment {
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
         viewPager.setAdapter(new SearchFilterPagerAdapter(getChildFragmentManager(), getContext(),
-                (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable("params"))));
+                (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG))));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);

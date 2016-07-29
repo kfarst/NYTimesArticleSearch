@@ -1,5 +1,7 @@
 package com.example.kfarst.nytimesarticlesearch.models;
 
+import com.github.underscore.$;
+import com.github.underscore.Block;
 import com.loopj.android.http.RequestParams;
 
 import org.parceler.Parcel;
@@ -8,6 +10,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static java.util.Arrays.asList;
 
 /**
  * Created by kfarst on 7/27/16.
@@ -40,9 +44,11 @@ public class SearchFilterParams {
     }
 
     public ArrayList<Category> addCategoriesFromArray(String[] categories) {
-        for(int i = 0; i < categories.length; i++) {
-           addCategory(categories[i]);
-        }
+        $.each(asList(categories), new Block<String>() {
+            public void apply(String name) {
+                addCategory(name);
+            }
+        });
 
         return this.categories;
     }
