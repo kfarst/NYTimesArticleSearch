@@ -12,21 +12,25 @@ import android.view.ViewGroup;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.adapters.SearchFilterPagerAdapter;
+import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
+
+import org.parceler.Parcels;
 
 /**
  * Created by kfarst on 7/22/16.
  */
-public class SearchFilterPagerFragment extends DialogFragment {
+public class SearchFilterFragment extends DialogFragment {
 
-    public SearchFilterPagerFragment() {
+    public SearchFilterFragment() {
         // Empty constructor is required for DialogFragment
         // Make sure not to add arguments to the constructor
         // Use `newInstance` instead as shown below
     }
 
-    public static SearchFilterPagerFragment newInstance(int position) {
-        SearchFilterPagerFragment frag = new SearchFilterPagerFragment();
+    public static SearchFilterFragment newInstance(SearchFilterParams params) {
+        SearchFilterFragment frag = new SearchFilterFragment();
         Bundle args = new Bundle();
+        args.putParcelable("params", Parcels.wrap(params));
         frag.setArguments(args);
         return frag;
     }
@@ -35,31 +39,16 @@ public class SearchFilterPagerFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_pager_view, container);
+        View view = inflater.inflate(R.layout.fragment_search_filter, container);
 
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpager);
-        viewPager.setAdapter(new SearchFilterPagerAdapter(getChildFragmentManager(),
-                getContext()));
+        viewPager.setAdapter(new SearchFilterPagerAdapter(getChildFragmentManager(), getContext(),
+                (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable("params"))));
 
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(viewPager);
 
         return view;
-    }
-
-    // This event is triggered soon after onCreateView().
-    // onViewCreated() is only called if the view returned from onCreateView() is non-null.
-    // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        insertNestedFragment();
-    }
-
-    // Embeds the child fragment dynamically
-    private void insertNestedFragment() {
-        Fragment childFragment = new DateFragment();
-        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_pager_view_container, childFragment).commit();
     }
 }

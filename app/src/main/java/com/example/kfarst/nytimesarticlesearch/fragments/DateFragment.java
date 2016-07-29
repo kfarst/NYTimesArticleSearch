@@ -1,29 +1,32 @@
 package com.example.kfarst.nytimesarticlesearch.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CalendarView;
 
-import com.appeaser.sublimepickerlibrary.SublimePicker;
-import com.appeaser.sublimepickerlibrary.datepicker.SelectedDate;
-import com.appeaser.sublimepickerlibrary.helpers.SublimeListenerAdapter;
-import com.appeaser.sublimepickerlibrary.helpers.SublimeOptions;
-import com.appeaser.sublimepickerlibrary.recurrencepicker.SublimeRecurrencePicker;
 import com.example.kfarst.nytimesarticlesearch.R;
+import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class DateFragment extends Fragment {
-    SublimePicker mSublimePicker;
+    private static SearchFilterParams mParams;
 
     public DateFragment() {
         // Required empty public constructor
     }
 
-    public static DateFragment newInstance() {
+    public static DateFragment newInstance(SearchFilterParams params) {
         DateFragment fragment = new DateFragment();
+        mParams = params;
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -39,25 +42,20 @@ public class DateFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_date, container, false);
 
-        SublimeListenerAdapter mListener = new SublimeListenerAdapter() {
-            @Override
-            public void onDateTimeRecurrenceSet(SublimePicker sublimeMaterialPicker, SelectedDate selectedDate, int hourOfDay, int minute, SublimeRecurrencePicker.RecurrenceOption recurrenceOption, String recurrenceRule) {
+        ButterKnife.bind(this, view);
 
+        CalendarView startDatePicker = (CalendarView) view.findViewById(R.id.startDatePicker);
+
+        startDatePicker.setDate(mParams.has("begin_date") ? mParams.getBeginDate() : new Date().getTime());
+
+        startDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                //GregorianCalendar date = new GregorianCalendar( year, month, dayOfMonth );
+                //mListItem.setDueDate(date.getTimeInMillis());
+                //startDatePicker.setDate(date.getTimeInMillis());
             }
+        });
 
-            @Override
-            public void onCancelled() {
-                // Handle click on `Cancel` button
-            }
-        };
-
-        mSublimePicker = (SublimePicker) view.findViewById(R.id.sublime_picker);
-        // Passing `null` to apply default options
-        SublimeOptions options = new SublimeOptions();
-        options.setDisplayOptions(SublimeOptions.ACTIVATE_DATE_PICKER);
-        mSublimePicker.initializePicker(options, mListener);
-
-        // Inflate the layout for this fragment
         return view;
     }
 }

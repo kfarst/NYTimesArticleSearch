@@ -2,11 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.kfarst.nytimesarticlesearch.fragments.DateFragment">
+    tools:context="com.example.kfarst.nytimesarticlesearch.fragments.OptionsFragment">
 
-    <CalendarView
-        android:id="@+id/startDatePicker"
+    <!--<com.tokenautocomplete.CategoriesCompletionView
+        android:id="@+id/searchView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />-->
 
 </FrameLayout>

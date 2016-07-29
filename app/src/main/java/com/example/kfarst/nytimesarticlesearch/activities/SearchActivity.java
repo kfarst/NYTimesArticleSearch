@@ -12,14 +12,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterPagerFragment;
+import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterFragment;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.example.kfarst.nytimesarticlesearch.adapters.ArticleArrayAdapter;
+import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 import com.example.kfarst.nytimesarticlesearch.support.EndlessRecyclerViewScrollListener;
 import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,7 +35,8 @@ public class SearchActivity extends AppCompatActivity {
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
     RecyclerView gvResults;
-    StaggeredGridLayoutManager stagaggeredGridLayoutManager;
+    StaggeredGridLayoutManager staggeredGridLayoutManager;
+    SearchFilterParams params = new SearchFilterParams("sort", "newest");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +54,17 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViews() {
         etQuery = (EditText) findViewById(R.id.etQuery);
-        btnSearch = (ImageButton) findViewById(R.id.btnQuery);
+        btnSearch = (ImageButton) findViewById(R.id.btnSearch);
         articles = new ArrayList<>();
 
         gvResults = (RecyclerView) findViewById(R.id.gvResults);
         gvResults.setHasFixedSize(true);
 
-        stagaggeredGridLayoutManager = new StaggeredGridLayoutManager(4, 1);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, 1);
 
-        gvResults.setLayoutManager(stagaggeredGridLayoutManager);
+        gvResults.setLayoutManager(staggeredGridLayoutManager);
 
-        gvResults.addOnScrollListener(new EndlessRecyclerViewScrollListener(stagaggeredGridLayoutManager) {
+        gvResults.addOnScrollListener(new EndlessRecyclerViewScrollListener(staggeredGridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount) {
                 // Triggered only when new data needs to be appended to the list
@@ -92,16 +93,15 @@ public class SearchActivity extends AppCompatActivity {
 
     public void renderSearchFilterFragment(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        SearchFilterPagerFragment alertDialog = SearchFilterPagerFragment.newInstance(0);
+        SearchFilterFragment alertDialog = SearchFilterFragment.newInstance(params);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        alertDialog.show(fm, "fragment_pager_view");
+        alertDialog.show(fm, "fragment_search_filter");
 
     }
 
     private void loadMoreArticles (int page) {
         String query = etQuery.getText().toString();
 
-        RequestParams params = new RequestParams();
         params.put("page", page);
         params.put("q", query);
 

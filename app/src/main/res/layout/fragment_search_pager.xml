@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.example.kfarst.nytimesarticlesearch.fragments.DateFragment">
+    tools:context="com.example.kfarst.nytimesarticlesearch.fragments.SearchPagerFragment">
 
-    <CalendarView
-        android:id="@+id/startDatePicker"
+    <FrameLayout
+        android:id="@+id/fragment_pager_view_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

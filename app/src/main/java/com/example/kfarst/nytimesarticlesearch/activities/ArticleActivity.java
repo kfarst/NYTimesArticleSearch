@@ -9,18 +9,25 @@ import android.webkit.WebViewClient;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.example.kfarst.nytimesarticlesearch.R;
 
+import org.parceler.Parcels;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ArticleActivity extends AppCompatActivity {
+    @BindView(R.id.wvArticle) WebView webView;
+    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        ButterKnife.bind(this);
+
         setSupportActionBar(toolbar);
 
-        Article article = (Article) getIntent().getSerializableExtra("article");
-
-        WebView webView = (WebView) findViewById(R.id.wvArticle);
+        Article article = (Article) Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
         webView.setWebViewClient(new WebViewClient() {
             @Override

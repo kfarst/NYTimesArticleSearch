@@ -3,6 +3,7 @@ package com.example.kfarst.nytimesarticlesearch.models;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.parceler.Parcel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -10,7 +11,11 @@ import java.util.ArrayList;
 /**
  * Created by kfarst on 7/17/16.
  */
-public class Article implements Serializable {
+@Parcel
+public class Article {
+
+    public Article () { }
+
     public String getWebUrl() {
         return webUrl;
     }
@@ -23,9 +28,9 @@ public class Article implements Serializable {
         return thumbnail;
     }
 
-    String webUrl;
-    String headline;
-    String thumbnail;
+   String webUrl;
+   String headline;
+   String thumbnail;
 
     // Decodes article json into article model object
     public static Article fromJson(JSONObject jsonObject) {

@@ -5,20 +5,23 @@ import android.support.v4.app.FragmentManager;
 import android.content.Context;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.kfarst.nytimesarticlesearch.fragments.DateFragment;
-import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterPagerFragment;
+import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterFragment;
+import com.example.kfarst.nytimesarticlesearch.fragments.SearchPagerFragment;
+import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 
 /**
  * Created by kfarst on 7/22/16.
  */
 public class SearchFilterPagerAdapter extends FragmentPagerAdapter {
-    final int PAGE_COUNT = 3;
-    private String tabTitles[] = new String[] { "Start Date", "Tab2", "Tab3" };
+    final int PAGE_COUNT = 2;
+    private String tabTitles[] = new String[] { "Begin Date", "Sort & Categories" };
     private Context context;
+    private SearchFilterParams params;
 
-    public SearchFilterPagerAdapter(FragmentManager fm, Context context) {
+    public SearchFilterPagerAdapter(FragmentManager fm, Context context, SearchFilterParams params) {
         super(fm);
         this.context = context;
+        this.params = params;
     }
 
     @Override
@@ -28,7 +31,7 @@ public class SearchFilterPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return DateFragment.newInstance();
+        return SearchPagerFragment.newInstance(position, this.params);
     }
 
     @Override

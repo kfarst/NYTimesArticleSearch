@@ -16,7 +16,13 @@ import com.example.kfarst.nytimesarticlesearch.activities.ArticleActivity;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.squareup.picasso.Picasso;
 
+import org.parceler.Parcel;
+import org.parceler.Parcels;
+
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by kfarst on 7/17/16.
@@ -35,8 +41,9 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // Your holder should contain a member variable
         // for any view that will be set as you render a row
-        public ImageView ivImage;
-        public TextView tvTitle;
+        @BindView(R.id.ivImage) ImageView ivImage;
+        @BindView(R.id.tvTitle) TextView tvTitle;
+
         private String webUrl;
 
         public void setWebUrl(String webUrl) {
@@ -49,9 +56,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
             // Stores the itemView in a public final member variable that can be used
             // to access the context from any ViewHolder instance.
             super(itemView);
-
-            ivImage = (ImageView) itemView.findViewById(R.id.ivImage);
-            tvTitle = (TextView) itemView.findViewById(R.id.tvTitle);
+            ButterKnife.bind(this, itemView);
         }
 
         public void bind (final Article article, final AdapterView.OnItemClickListener listener) {
@@ -60,7 +65,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
                 public void onClick(View view) {
                     Context context = view.getContext();
                     Intent i = new Intent(context, ArticleActivity.class);
-                    i.putExtra("article", article);
+                    i.putExtra("article", Parcels.wrap(article));
                     context.startActivity(i);
                 }
             });
@@ -76,8 +81,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         View listItemView = inflater.inflate(R.layout.item_article_result, parent, false);
 
         // Return a new holder instance
-        ViewHolder viewHolder = new ViewHolder(listItemView);
-        return viewHolder;
+        return new ViewHolder(listItemView);
     }
 
     @Override
