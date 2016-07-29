@@ -7,14 +7,27 @@ import java.io.Serializable;
 /**
  * Created by kfarst on 7/28/16.
  */
-public class Category implements Serializable {
+
+@Parcel
+public class Category {
+    String name;
+    boolean selected;
+
+    public Category(String name) {
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
 
-    String name;
-
-    public Category(String name) {
-
+    public boolean isSelected() {
+        return selected;
     }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public Category() { }
 }

@@ -20,6 +20,7 @@ import com.example.kfarst.nytimesarticlesearch.support.EndlessRecyclerViewScroll
 import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,7 +37,7 @@ public class SearchActivity extends AppCompatActivity {
     ArticleArrayAdapter adapter;
     RecyclerView gvResults;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
-    SearchFilterParams params = new SearchFilterParams("sort", "newest");
+    SearchFilterParams filters = new SearchFilterParams();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +94,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void renderSearchFilterFragment(View view) {
         FragmentManager fm = getSupportFragmentManager();
-        SearchFilterFragment alertDialog = SearchFilterFragment.newInstance(params);
+        SearchFilterFragment alertDialog = SearchFilterFragment.newInstance(filters);
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         alertDialog.show(fm, "fragment_search_filter");
 
@@ -102,8 +103,10 @@ public class SearchActivity extends AppCompatActivity {
     private void loadMoreArticles (int page) {
         String query = etQuery.getText().toString();
 
-        params.put("page", page);
-        params.put("q", query);
+        filters.setPage(page);
+        filters.setQuery(query);
+
+        RequestParams params = new RequestParams();
 
         NYTimesApiClient.getArticles(params, new JsonHttpResponseHandler() {
             @Override

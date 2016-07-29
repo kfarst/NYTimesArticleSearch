@@ -4,9 +4,19 @@
     android:layout_height="wrap_content"
     tools:context="com.example.kfarst.nytimesarticlesearch.fragments.OptionsFragment">
 
-    <!--<com.tokenautocomplete.CategoriesCompletionView
-        android:id="@+id/searchView"
+    <android.support.v7.widget.AppCompatSpinner
+        android:id="@+id/spOrder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />-->
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/gvCategories"
+        android:layout_below="@+id/spOrder"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:numColumns="3" />
 
 </FrameLayout>

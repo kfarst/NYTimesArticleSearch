@@ -4,6 +4,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +15,12 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.example.kfarst.nytimesarticlesearch.R;
+import com.example.kfarst.nytimesarticlesearch.adapters.CategoryArrayAdapter;
 import com.example.kfarst.nytimesarticlesearch.models.Category;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 import com.example.kfarst.nytimesarticlesearch.support.CategoriesCompletionView;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 
@@ -23,7 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OptionsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    //@BindView(R.id.searchView) CategoriesCompletionView searchView;
+    private static String PARAMS_ARG = "params";
+
+    @BindView(R.id.spOrder) Spinner spOrder;
+    @BindView(R.id.gvCategories) RecyclerView gvCategories;
 
     public OptionsFragment() {
         // Required empty public constructor
@@ -33,6 +41,7 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
     public static OptionsFragment newInstance(SearchFilterParams params) {
         OptionsFragment fragment = new OptionsFragment();
         Bundle args = new Bundle();
+        args.putParcelable(PARAMS_ARG, Parcels.wrap(params));
         fragment.setArguments(args);
         return fragment;
     }
@@ -48,15 +57,19 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_options, container, false);
 
-        //ButterKnife.bind(this, view);
+        ButterKnife.bind(this, view);
 
-        //CategoriesCompletionView searchView = (CategoriesCompletionView) view.findViewById(R.id.searchView);
+        SearchFilterParams params = (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG));
 
-        //ArrayAdapter<Category> adapter = new ArrayAdapter<Category>(getContext(),
-        //        android.R.layout.simple_dropdown_item_1line, getCategoryObjects(getResources().getStringArray(R.array.categories_array)));
+        gvCategories.hasFixedSize();
 
-        //searchView.setAdapter(adapter);
-        //searchView.allowDuplicates(false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 3);
+
+        gvCategories.setLayoutManager(gridLayoutManager);
+
+        CategoryArrayAdapter adapter = new CategoryArrayAdapter(params.addCategoriesFromArray(getResources().getStringArray(R.array.categories_array)));
+
+        gvCategories.setAdapter(adapter);
 
         return view;
     }

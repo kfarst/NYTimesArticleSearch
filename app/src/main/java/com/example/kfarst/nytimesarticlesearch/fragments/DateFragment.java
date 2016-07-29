@@ -2,6 +2,7 @@ package com.example.kfarst.nytimesarticlesearch.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +11,14 @@ import android.widget.CalendarView;
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.internal.Utils;
 
 public class DateFragment extends Fragment {
     private static SearchFilterParams mParams;
@@ -46,7 +49,11 @@ public class DateFragment extends Fragment {
 
         CalendarView startDatePicker = (CalendarView) view.findViewById(R.id.startDatePicker);
 
-        startDatePicker.setDate(mParams.has("begin_date") ? mParams.getBeginDate() : new Date().getTime());
+        try {
+            startDatePicker.setDate(mParams.getBeginDate() != null ? mParams.getBeginDate() : new Date().getTime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         startDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
