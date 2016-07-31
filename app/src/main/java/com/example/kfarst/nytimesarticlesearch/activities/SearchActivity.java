@@ -40,6 +40,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     RecyclerView gvResults;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
     SearchFilterParams filters = new SearchFilterParams();
+    RequestParams searchParams = new RequestParams();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,28 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
 
         Toast.makeText(view.getContext(), R.string.searching, Toast.LENGTH_SHORT).show();
 
+        String query = etQuery.getText().toString();
+        filters.setQuery(query);
+        searchParams.put("q", filters.getQuery());
+
+        String newsDesk = filters.getNewsDeskParams();
+
+        try {
+            if (filters.getBeginDate() != null) {
+                searchParams.put("begin_date", filters.getBeginDateAsString());
+            } else {
+                searchParams.remove("begin_date");
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (!TextUtils.isEmpty(newsDesk)) {
+            searchParams.put("fq", newsDesk);
+        } else {
+            searchParams.remove("fq");
+        }
+
         loadMoreArticles(0);
 
         Toast.makeText(SearchActivity.this, R.string.done, Toast.LENGTH_SHORT).show();
@@ -103,33 +126,12 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     }
 
     private void loadMoreArticles (int page) {
-        String query = etQuery.getText().toString();
 
         filters.setPage(page);
-        filters.setQuery(query);
 
-        RequestParams params = new RequestParams();
+        searchParams.put("page", filters.getPage());
 
-        params.put("q", filters.getQuery());
-        params.put("page", filters.getPage());
-
-        String newsDesk = filters.getNewsDeskParams();
-
-        try {
-            if (filters.getBeginDate() != null) {
-               params.put("begin_date", filters.getBeginDateAsString());
-            }
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        if (!TextUtils.isEmpty(newsDesk)) {
-            params.put("fq", newsDesk);
-        } else {
-            params.remove("fq");
-        }
-
-        NYTimesApiClient.getArticles(params, new JsonHttpResponseHandler() {
+        NYTimesApiClient.getArticles(searchParams, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 JSONArray articleJsonResults = null;
