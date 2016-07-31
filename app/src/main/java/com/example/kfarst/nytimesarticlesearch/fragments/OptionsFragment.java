@@ -91,14 +91,4 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
     public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
-
-    private ArrayList<Category> getCategoryObjects(String[] categories) {
-        ArrayList<Category> categoryArrayList = new ArrayList<>();
-
-        for (int i = 0; i < categories.length; i++) {
-            categoryArrayList.add(new Category(categories[i]));
-        }
-
-        return categoryArrayList;
-    }
 }
