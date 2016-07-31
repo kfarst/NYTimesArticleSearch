@@ -1,10 +1,13 @@
 package com.example.kfarst.nytimesarticlesearch.activities;
 
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
@@ -16,7 +19,6 @@ import butterknife.ButterKnife;
 
 public class ArticleActivity extends AppCompatActivity {
     @BindView(R.id.wvArticle) WebView webView;
-    @BindView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,6 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article);
 
         ButterKnife.bind(this);
-
-        setSupportActionBar(toolbar);
 
         Article article = (Article) Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
@@ -40,4 +40,7 @@ public class ArticleActivity extends AppCompatActivity {
         webView.loadUrl(article.getWebUrl());
     }
 
+    public void closeArticle(View view) {
+        finish();
+    }
 }

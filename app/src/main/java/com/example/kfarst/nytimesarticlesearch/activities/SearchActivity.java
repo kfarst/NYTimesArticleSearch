@@ -51,7 +51,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        getSupportActionBar().setCustomView(R.layout.actionbar_main);
+        getSupportActionBar().setCustomView(R.layout.actionbar_search);
 
         setupViews();
     }
