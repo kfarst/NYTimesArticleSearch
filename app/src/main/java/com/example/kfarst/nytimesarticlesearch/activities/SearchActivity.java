@@ -18,9 +18,11 @@ import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterFragment;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
+import com.example.kfarst.nytimesarticlesearch.support.DeviceDimensionsHelper;
 import com.example.kfarst.nytimesarticlesearch.support.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +41,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     ArticleArrayAdapter adapter;
     RecyclerView gvResults;
     StaggeredGridLayoutManager staggeredGridLayoutManager;
+    AVLoadingIndicatorView avLoadingIndicatorView;
     SearchFilterParams filters = new SearchFilterParams();
     RequestParams searchParams = new RequestParams();
 
@@ -59,6 +62,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     private void setupViews() {
         etQuery = (EditText) findViewById(R.id.etQuery);
         btnSearch = (ImageButton) findViewById(R.id.btnSearch);
+        avLoadingIndicatorView = (AVLoadingIndicatorView) findViewById(R.id.avloadingIndicatorView);
         articles = new ArrayList<>();
 
         gvResults = (RecyclerView) findViewById(R.id.gvResults);
@@ -87,8 +91,6 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
             articles.clear();
             adapter.notifyDataSetChanged();
         }
-
-        Toast.makeText(view.getContext(), R.string.searching, Toast.LENGTH_SHORT).show();
 
         String query = etQuery.getText().toString();
         filters.setQuery(query);
@@ -119,8 +121,6 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
         }
 
         loadMoreArticles(0);
-
-        Toast.makeText(SearchActivity.this, R.string.done, Toast.LENGTH_SHORT).show();
     }
 
     public void renderSearchFilterFragment(View view) {
@@ -156,7 +156,25 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Toast.makeText(SearchActivity.this, R.string.search_failed, Toast.LENGTH_SHORT).show();
             }
+
+            @Override
+            public void onStart() {
+                startAnim();
+            }
+
+            @Override
+            public void onFinish() {
+                stopAnim();
+            }
         });
+    }
+
+    void startAnim(){
+        avLoadingIndicatorView.setVisibility(View.VISIBLE);
+    }
+
+    void stopAnim(){
+        avLoadingIndicatorView.setVisibility(View.GONE);
     }
 
     @Override

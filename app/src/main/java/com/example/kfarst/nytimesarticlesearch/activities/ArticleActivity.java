@@ -1,13 +1,10 @@
 package com.example.kfarst.nytimesarticlesearch.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.models.Article;

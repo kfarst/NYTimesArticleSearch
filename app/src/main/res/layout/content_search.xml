@@ -17,4 +17,16 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:numColumns="4" />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/avloadingIndicatorView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:indicator="BallSpinFadeLoader"
+        app:indicator_color="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>
