@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -78,10 +80,17 @@ public class CategoryArrayAdapter extends RecyclerView.Adapter<CategoryArrayAdap
 
     @Override
     public void onBindViewHolder(CategoryArrayAdapter.ViewHolder holder, int position) {
-        Category category = mCategories.get(position);
+        final Category category = mCategories.get(position);
 
         holder.tvCategory.setText(category.getName());
         holder.scCategory.setChecked(category.isSelected());
+
+        holder.scCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                category.setSelected(b);
+            }
+        });
 
         holder.bind(mCategories.get(position), listener);
     }
