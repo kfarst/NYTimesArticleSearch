@@ -8,6 +8,7 @@ import android.webkit.WebViewClient;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import org.parceler.Parcels;
 
@@ -16,6 +17,7 @@ import butterknife.ButterKnife;
 
 public class ArticleActivity extends AppCompatActivity {
     @BindView(R.id.wvArticle) WebView webView;
+    @BindView(R.id.avloadingIndicatorView) AVLoadingIndicatorView avLoadingIndicatorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +28,18 @@ public class ArticleActivity extends AppCompatActivity {
 
         Article article = (Article) Parcels.unwrap(getIntent().getParcelableExtra("article"));
 
+        avLoadingIndicatorView.setVisibility(View.VISIBLE);
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                avLoadingIndicatorView.setVisibility(View.GONE);
             }
         });
 
