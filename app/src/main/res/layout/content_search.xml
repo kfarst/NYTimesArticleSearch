@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         app:indicator="BallSpinFadeLoader"
-        app:indicator_color="@color/colorAccent"
+        app:indicator_color="@color/accent"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:layout_centerHorizontal="true"

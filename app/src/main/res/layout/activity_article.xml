@@ -12,7 +12,7 @@
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:src="@drawable/ic_close"
         android:tint="@android:color/white"
-        android:background="@color/colorPrimary"
+        android:background="@color/primary"
         android:onClick="closeArticle"
         android:layout_gravity="left|top"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:visibility="gone"
         android:layout_gravity="center"
         app:indicator="BallGridPulse"
-        app:indicator_color="@color/colorAccent"
+        app:indicator_color="@color/accent"
         />
 
 </android.support.design.widget.CoordinatorLayout>
