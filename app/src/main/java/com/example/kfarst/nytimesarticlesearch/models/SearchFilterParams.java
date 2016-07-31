@@ -1,13 +1,10 @@
 package com.example.kfarst.nytimesarticlesearch.models;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.github.underscore.$;
 import com.github.underscore.Block;
-import com.github.underscore.Function1;
 import com.github.underscore.Predicate;
-import com.loopj.android.http.RequestParams;
 
 import org.parceler.Parcel;
 
@@ -15,8 +12,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import static java.util.Arrays.asList;
@@ -96,8 +91,8 @@ public class SearchFilterParams {
         List<Category> selectedCategories = getSelectedCategories();
 
         if (selectedCategories.size() > 0) {
-            String categories = TextUtils.join(",", selectedCategoryNames(selectedCategories));
-            return ARG_NEWS_DESK + ":(" + categories + ")";
+            String categories = TextUtils.join("\",\"", selectedCategoryNames(selectedCategories));
+            return ARG_NEWS_DESK + ":(\"" + categories + "\")";
         }
 
         return "";

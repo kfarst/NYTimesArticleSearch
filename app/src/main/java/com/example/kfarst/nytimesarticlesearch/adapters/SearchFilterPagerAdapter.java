@@ -1,11 +1,10 @@
 package com.example.kfarst.nytimesarticlesearch.adapters;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.content.Context;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterFragment;
 import com.example.kfarst.nytimesarticlesearch.fragments.SearchPagerFragment;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 

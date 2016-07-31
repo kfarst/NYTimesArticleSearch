@@ -16,7 +16,6 @@ import com.example.kfarst.nytimesarticlesearch.activities.ArticleActivity;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
 import com.squareup.picasso.Picasso;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.List;

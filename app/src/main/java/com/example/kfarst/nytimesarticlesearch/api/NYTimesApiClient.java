@@ -3,7 +3,10 @@ package com.example.kfarst.nytimesarticlesearch.api;
 /**
  * Created by kfarst on 7/21/16.
  */
-import com.loopj.android.http.*;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 public class NYTimesApiClient {
     private static final String BASE_URL = "https://api.nytimes.com/svc/search/v2/";

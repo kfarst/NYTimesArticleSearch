@@ -2,7 +2,6 @@ package com.example.kfarst.nytimesarticlesearch.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,8 @@ import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.internal.Utils;
 
 public class DateFragment extends Fragment {
     private static SearchFilterParams mParams;

@@ -12,17 +12,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.example.kfarst.nytimesarticlesearch.R;
+import com.example.kfarst.nytimesarticlesearch.adapters.ArticleArrayAdapter;
+import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
 import com.example.kfarst.nytimesarticlesearch.fragments.SearchFilterFragment;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
-import com.example.kfarst.nytimesarticlesearch.adapters.ArticleArrayAdapter;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
 import com.example.kfarst.nytimesarticlesearch.support.EndlessRecyclerViewScrollListener;
-import com.example.kfarst.nytimesarticlesearch.api.NYTimesApiClient;
-import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import cz.msebera.android.httpclient.util.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +30,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
+import cz.msebera.android.httpclient.util.TextUtils;
 
 public class SearchActivity extends AppCompatActivity implements SearchFilterFragment.SearchFilterDialogListener {
     EditText etQuery;
