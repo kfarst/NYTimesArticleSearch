@@ -11,10 +11,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.activities.ArticleActivity;
 import com.example.kfarst.nytimesarticlesearch.models.Article;
-import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -90,7 +90,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
         holder.tvTitle.setText(article.getHeadline());
 
         if (!TextUtils.isEmpty(article.getThumbnail())) {
-            Picasso
+            Glide
                     .with(holder.ivImage.getContext())
                     .load(article.getThumbnail())
                     .into(holder.ivImage);
