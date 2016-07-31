@@ -1,34 +1,29 @@
 package com.example.kfarst.nytimesarticlesearch.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.Spinner;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.adapters.CategoryArrayAdapter;
-import com.example.kfarst.nytimesarticlesearch.models.Category;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
-import com.example.kfarst.nytimesarticlesearch.support.CategoriesCompletionView;
 
 import org.parceler.Parcels;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class OptionsFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private static String PARAMS_ARG = "params";
+    private static SearchFilterParams params;
 
     @BindView(R.id.spOrder) Spinner spOrder;
     @BindView(R.id.gvCategories) RecyclerView gvCategories;
@@ -61,7 +56,7 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> spinnerAdapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.order_array, android.R.layout.simple_spinner_item);
+                R.array.sort_array, android.R.layout.simple_spinner_item);
 
         // Specify the layout to use when the list of choices appears
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -69,7 +64,9 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
         // Apply the adapter to the spinner
         spOrder.setAdapter(spinnerAdapter);
 
-        SearchFilterParams params = (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG));
+        spOrder.setOnItemSelectedListener(this);
+
+        params = (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG));
 
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
 
@@ -84,7 +81,9 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
+        if (adapterView.getId() == R.id.spOrder) {
+            params.setSort(adapterView.getSelectedItem().toString());
+        }
     }
 
     @Override

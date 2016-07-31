@@ -38,6 +38,16 @@ public class SearchFilterParams {
 
     int page;
     String query;
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort.toLowerCase();
+    }
+
+    String sort = "Relevance";
     ArrayList<Category> categories = new ArrayList<>();
     SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd");
 

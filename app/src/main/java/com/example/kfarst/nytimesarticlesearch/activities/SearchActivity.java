@@ -106,7 +106,13 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
             e.printStackTrace();
         }
 
-        if (!TextUtils.isEmpty(newsDesk)) {
+        if (filters.getSort().equalsIgnoreCase("Relevance")) {
+            searchParams.remove("sort");
+        } else {
+            searchParams.put("sort", filters.getSort().toLowerCase());
+        }
+
+        if (!TextUtils.isBlank(newsDesk)) {
             searchParams.put("fq", newsDesk);
         } else {
             searchParams.remove("fq");
