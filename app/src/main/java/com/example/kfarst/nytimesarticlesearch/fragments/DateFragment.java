@@ -49,17 +49,26 @@ public class DateFragment extends Fragment {
 
         CalendarView startDatePicker = (CalendarView) view.findViewById(R.id.startDatePicker);
 
+        long now = new Date().getTime();
+
+        // Do not allow a future date to be picked
+        startDatePicker.setMaxDate(now);
+
         try {
-            startDatePicker.setDate(mParams.getBeginDate() != null ? mParams.getBeginDate() : new Date().getTime());
+            startDatePicker.setDate(mParams.getBeginDate() != null ? mParams.getBeginDate() : now);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
         startDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                //GregorianCalendar date = new GregorianCalendar( year, month, dayOfMonth );
-                //mListItem.setDueDate(date.getTimeInMillis());
-                //startDatePicker.setDate(date.getTimeInMillis());
+                Calendar cal = Calendar.getInstance();
+
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
+                mParams.setBeginDate(cal);
             }
         });
 

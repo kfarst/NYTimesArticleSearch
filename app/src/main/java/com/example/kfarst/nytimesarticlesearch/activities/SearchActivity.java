@@ -22,15 +22,17 @@ import com.example.kfarst.nytimesarticlesearch.R;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import cz.msebera.android.httpclient.util.TextUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
-public class SearchActivity extends AppCompatActivity {
+public class SearchActivity extends AppCompatActivity implements SearchFilterFragment.SearchFilterDialogListener {
     EditText etQuery;
     ImageButton btnSearch;
     ArrayList<Article> articles;
@@ -108,6 +110,25 @@ public class SearchActivity extends AppCompatActivity {
 
         RequestParams params = new RequestParams();
 
+        params.put("q", filters.getQuery());
+        params.put("page", filters.getPage());
+
+        String newsDesk = filters.getNewsDeskParams();
+
+        try {
+            if (filters.getBeginDate() != null) {
+               params.put("begin_date", filters.getBeginDateAsString());
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (!TextUtils.isEmpty(newsDesk)) {
+            params.put("fq", newsDesk);
+        } else {
+            params.remove("fq");
+        }
+
         NYTimesApiClient.getArticles(params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -128,5 +149,10 @@ public class SearchActivity extends AppCompatActivity {
                 Toast.makeText(SearchActivity.this, R.string.search_failed, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onFinishEditDialog(SearchFilterParams params) {
+        filters = params;
     }
 }
