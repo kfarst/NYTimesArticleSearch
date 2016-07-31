@@ -84,7 +84,7 @@ public class SearchFilterParams {
     }
 
     public void setBeginDate(Calendar date) {
-        this.beginDate = DATE_FORMAT.format(date.getTimeInMillis());
+        this.beginDate = date != null ? DATE_FORMAT.format(date.getTimeInMillis()) : null;
     }
 
     public String getNewsDeskParams() {

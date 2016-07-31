@@ -2,10 +2,12 @@ package com.example.kfarst.nytimesarticlesearch.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CalendarView;
+import android.widget.CompoundButton;
 
 import com.example.kfarst.nytimesarticlesearch.R;
 import com.example.kfarst.nytimesarticlesearch.models.SearchFilterParams;
@@ -14,10 +16,13 @@ import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class DateFragment extends Fragment {
     private static SearchFilterParams mParams;
+
+    @BindView(R.id.scDateToggle) SwitchCompat scDateToggle;
 
     public DateFragment() {
         // Required empty public constructor
@@ -43,15 +48,21 @@ public class DateFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        CalendarView startDatePicker = (CalendarView) view.findViewById(R.id.startDatePicker);
+        final CalendarView startDatePicker = (CalendarView) view.findViewById(R.id.startDatePicker);
 
-        long now = new Date().getTime();
+        final long now = new Date().getTime();
 
         // Do not allow a future date to be picked
         startDatePicker.setMaxDate(now);
 
         try {
-            startDatePicker.setDate(mParams.getBeginDate() != null ? mParams.getBeginDate() : now);
+            if (mParams.getBeginDate() != null) {
+                startDatePicker.setDate(mParams.getBeginDate());
+            } else {
+                scDateToggle.toggle();
+                startDatePicker.setAlpha(0.5f);
+                startDatePicker.setDate(now);
+            }
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -65,6 +76,23 @@ public class DateFragment extends Fragment {
                 cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
                 mParams.setBeginDate(cal);
+
+                if (scDateToggle.isChecked()) {
+                    scDateToggle.toggle();
+                }
+            }
+        });
+
+        scDateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isSelected) {
+                if (isSelected) {
+                    startDatePicker.setAlpha(0.5f);
+                    mParams.setBeginDate(null);
+                    startDatePicker.setDate(now);
+                } else {
+                    startDatePicker.setAlpha(1.0f);
+                }
             }
         });
 

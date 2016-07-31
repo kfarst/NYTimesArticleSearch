@@ -11,6 +11,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_filters">Search Filters</string>
+    <string name="article_begin_date_toggle_label">Search articles from all dates</string>
 
     <string-array name="sort_array">
         <item>Relevance</item>
