@@ -193,5 +193,9 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     @Override
     public void onFinishEditDialog(SearchFilterParams params) {
         filters = params;
+
+        if (!TextUtils.isBlank(etQuery.getQuery().toString())) {
+            onArticleSearch();
+        }
     }
 }
