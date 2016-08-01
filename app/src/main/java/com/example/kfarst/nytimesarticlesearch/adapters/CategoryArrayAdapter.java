@@ -78,12 +78,7 @@ public class CategoryArrayAdapter extends RecyclerView.Adapter<CategoryArrayAdap
         holder.tvCategory.setText(category.getName());
         holder.scCategory.setChecked(category.isSelected());
 
-        holder.scCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                category.setSelected(b);
-            }
-        });
+        holder.scCategory.setOnCheckedChangeListener((compoundButton, b) -> category.setSelected(b));
 
         holder.bind(mCategories.get(position), listener);
     }

@@ -74,11 +74,7 @@ public class SearchFilterParams {
     }
 
     public ArrayList<Category> addCategoriesFromArray(String[] categories) {
-        $.each(asList(categories), new Block<String>() {
-            public void apply(String name) {
-                addCategory(name);
-            }
-        });
+        $.each(asList(categories), name -> addCategory(name));
 
         return this.categories;
     }
@@ -99,10 +95,8 @@ public class SearchFilterParams {
     }
 
     private List<Category> getSelectedCategories() {
-        return $.filter(categories, new Predicate<Category>() {
-            public Boolean apply(Category category) {
-                return category.isSelected();
-            }
+        return $.filter(categories, category -> {
+            return category.isSelected();
         });
     }
 

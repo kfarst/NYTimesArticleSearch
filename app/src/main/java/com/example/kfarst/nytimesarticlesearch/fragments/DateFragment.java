@@ -67,32 +67,27 @@ public class DateFragment extends Fragment {
             e.printStackTrace();
         }
 
-        startDatePicker.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-                Calendar cal = Calendar.getInstance();
+        startDatePicker.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
+            Calendar cal = Calendar.getInstance();
 
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, month);
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                mParams.setBeginDate(cal);
+            mParams.setBeginDate(cal);
 
-                if (scDateToggle.isChecked()) {
-                    scDateToggle.toggle();
-                }
+            if (scDateToggle.isChecked()) {
+                scDateToggle.toggle();
             }
         });
 
-        scDateToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean isSelected) {
-                if (isSelected) {
-                    startDatePicker.setAlpha(0.5f);
-                    mParams.setBeginDate(null);
-                    startDatePicker.setDate(now);
-                } else {
-                    startDatePicker.setAlpha(1.0f);
-                }
+        scDateToggle.setOnCheckedChangeListener((compoundButton, isSelected) -> {
+            if (isSelected) {
+                startDatePicker.setAlpha(0.5f);
+                mParams.setBeginDate(null);
+                startDatePicker.setDate(now);
+            } else {
+                startDatePicker.setAlpha(1.0f);
             }
         });
 
