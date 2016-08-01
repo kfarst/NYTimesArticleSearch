@@ -113,24 +113,24 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
 
         try {
             if (filters.getBeginDate() != null) {
-                searchParams.put("begin_date", filters.getBeginDateAsString());
+                searchParams.put(getString(R.string.begin_date), filters.getBeginDateAsString());
             } else {
-                searchParams.remove("begin_date");
+                searchParams.remove(getString(R.string.begin_date));
             }
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (filters.getSort().equalsIgnoreCase("Relevance")) {
-            searchParams.remove("sort");
+        if (filters.getSort().equalsIgnoreCase(getString(R.string.relevance))) {
+            searchParams.remove(getString(R.string.sort));
         } else {
-            searchParams.put("sort", filters.getSort().toLowerCase());
+            searchParams.put(getString(R.string.sort), filters.getSort().toLowerCase());
         }
 
         if (!TextUtils.isBlank(newsDesk)) {
-            searchParams.put("fq", newsDesk);
+            searchParams.put(getString(R.string.filter_query), newsDesk);
         } else {
-            searchParams.remove("fq");
+            searchParams.remove(getString(R.string.filter_query));
         }
 
         loadMoreArticles(0);
@@ -148,7 +148,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
 
         filters.setPage(page);
 
-        searchParams.put("page", filters.getPage());
+        searchParams.put(getString(R.string.page), filters.getPage());
 
         NYTimesApiClient.getArticles(searchParams, new JsonHttpResponseHandler() {
             @Override

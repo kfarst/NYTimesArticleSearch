@@ -1,17 +1,18 @@
 <resources>
     <string name="app_name">NYTimesArticleSearch</string>
-    <string name="action_settings">Settings</string>
     <string name="hint">Enter search query</string>
-    <string name="search">Search</string>
     <string name="title_activity_article">ArticleActivity</string>
-    <string name="searching">Searching...</string>
-    <string name="done">Done!</string>
     <string name="search_failed">Search failed. Please try again.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="search_filters">Search Filters</string>
     <string name="article_begin_date_toggle_label">Search articles from all dates</string>
+    <string name="begin_date">begin_date</string>
+    <string name="relevance">Relevance</string>
+    <string name="sort">sort</string>
+    <string name="filter_query">fq</string>
+    <string name="page">page</string>
+    <string name="article">article</string>
 
     <string-array name="sort_array">
         <item>Relevance</item>
