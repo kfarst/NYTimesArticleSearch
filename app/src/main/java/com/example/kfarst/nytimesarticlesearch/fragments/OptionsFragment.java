@@ -67,6 +67,18 @@ public class OptionsFragment extends Fragment implements AdapterView.OnItemSelec
 
         params = (SearchFilterParams) Parcels.unwrap(getArguments().getParcelable(PARAMS_ARG));
 
+        String[] dropdownOptions = getResources().getStringArray(R.array.sort_array);
+
+        int selectedIndex = 0;
+
+        for (int i = 0; i < dropdownOptions.length; i++) {
+           if (params.getSort().equalsIgnoreCase(dropdownOptions[i]))  {
+               selectedIndex = i;
+           }
+        }
+
+        spOrder.setSelection(selectedIndex);
+
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
 
         gvCategories.setLayoutManager(gridLayoutManager);
