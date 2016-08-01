@@ -67,7 +67,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
         gvResults = (RecyclerView) findViewById(R.id.gvResults);
         gvResults.setHasFixedSize(true);
 
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(4, 1);
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(3, 1);
 
         gvResults.setLayoutManager(staggeredGridLayoutManager);
 

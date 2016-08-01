@@ -16,6 +16,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:background="@color/secondary_text"
         android:numColumns="4" />
 
     <com.wang.avi.AVLoadingIndicatorView

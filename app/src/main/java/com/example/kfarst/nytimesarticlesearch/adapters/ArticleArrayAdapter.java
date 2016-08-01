@@ -90,6 +90,7 @@ public class ArticleArrayAdapter extends RecyclerView.Adapter<ArticleArrayAdapte
             Glide
                     .with(holder.ivImage.getContext())
                     .load(article.getThumbnail())
+                    .fitCenter()
                     .into(holder.ivImage);
         }
 
