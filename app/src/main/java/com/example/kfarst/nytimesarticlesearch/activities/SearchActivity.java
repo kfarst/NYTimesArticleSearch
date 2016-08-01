@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -35,8 +36,7 @@ import cz.msebera.android.httpclient.Header;
 import cz.msebera.android.httpclient.util.TextUtils;
 
 public class SearchActivity extends AppCompatActivity implements SearchFilterFragment.SearchFilterDialogListener {
-    EditText etQuery;
-    ImageButton btnSearch;
+    SearchView etQuery;
     ArrayList<Article> articles;
     ArticleArrayAdapter adapter;
     RecyclerView gvResults;
@@ -60,8 +60,7 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
     }
 
     private void setupViews() {
-        etQuery = (EditText) findViewById(R.id.etQuery);
-        btnSearch = (ImageButton) findViewById(R.id.btnSearch);
+        etQuery = (SearchView) findViewById(R.id.etQuery);
         avLoadingIndicatorView = (AVLoadingIndicatorView) findViewById(R.id.avloadingIndicatorView);
         articles = new ArrayList<>();
 
@@ -84,15 +83,29 @@ public class SearchActivity extends AppCompatActivity implements SearchFilterFra
         adapter = new ArticleArrayAdapter(articles);
 
         gvResults.setAdapter(adapter);
+
+        etQuery.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                etQuery.clearFocus();
+                onArticleSearch();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
     }
 
-    public void onArticleSearch(final View view) {
+    public void onArticleSearch() {
         if (articles.size() > 0) {
             articles.clear();
             adapter.notifyDataSetChanged();
         }
 
-        String query = etQuery.getText().toString();
+        String query = etQuery.getQuery().toString();
         filters.setQuery(query);
         searchParams.put("q", filters.getQuery());
 
