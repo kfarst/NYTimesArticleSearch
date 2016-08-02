@@ -43,7 +43,7 @@ The following **bonus** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://d2wvs5jsbn4h49.cloudfront.net/items/44000m3W06331s3W3L2E/walkthrough.gif?v=44d4d642' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://d2wvs5jsbn4h49.cloudfront.net/items/0w1c0J2b1f2z001F0H0Z/walkthrough.gif?v=63c5b60c' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
